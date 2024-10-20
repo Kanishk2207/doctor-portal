@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: go-app
+  template:
+    metadata:
+      labels:
+        app: go-app
+    spec:
+      containers:
+      - name: go-app
+        image: kanishk2207/go_auth_service:0.0.1
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        env:
+        - name: DSN  # Change to uppercase
+          valueFrom:
+            secretKeyRef:
+              name: app-secret
+              key: dsn
+        - name: HTTPADDRESS  # Change to uppercase
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: HTTPAddress
+        - name: GRPCADDRESS  # Change to uppercase
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: GRPCAddress
+        - name: JWTSECRET
+          valueFrom:
+            secretKeyRef:
+              name: app-secret
+              key: JWTSECRET
+        - name: JWTEXPIRY
+          valueFrom:
+            secretKeyRef:
+              name: app-secret
+              key: JWTEXPIRY

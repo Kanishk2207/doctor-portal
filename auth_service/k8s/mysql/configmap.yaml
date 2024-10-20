@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-init-script
+data:
+  init-db.sql: |
+    CREATE DATABASE IF NOT EXISTS auth_service_db;
+    CREATE USER IF NOT EXISTS 'dev_user'@'%' IDENTIFIED BY 'Kanishk_22';
+    GRANT ALL PRIVILEGES ON *.* TO 'dev_user'@'%';
+    FLUSH PRIVILEGES;
