@@ -3,6 +3,9 @@ package main
 import (
 	"auth_service/internal/configs"
 	"auth_service/internal/db"
+	"auth_service/internal/handler"
+	"auth_service/internal/repository"
+	"auth_service/internal/service"
 	"fmt"
 	"log"
 	"net/http"
@@ -29,12 +32,12 @@ func main() {
 	http.HandleFunc("/health", healthCheckHandler)
 	port := config.HTTPAddress
 
-	// userRepo := repository.NewUserRepository(db.DB)
-	// authService := service.NewAuthService(userRepo)
-	// authHandler := handler.NewAuthHandler(authService)
+	userRepo := repository.NewUserRepository(db.DB)
+	authService := service.NewAuthService(userRepo)
+	authHandler := handler.NewAuthHandler(authService)
 
-	// http.HandleFunc("/signup", authHandler.Signup)
-	// http.HandleFunc("/login", authHandler.Login)
+	http.HandleFunc("/signup", authHandler.Signup)
+	http.HandleFunc("/login", authHandler.Login)
 
 	fmt.Printf("Starting server on port %s...\n", port)
 	err := http.ListenAndServe(port, nil)
