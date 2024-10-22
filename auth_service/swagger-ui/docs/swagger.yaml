@@ -1,0 +1,214 @@
+openapi: 3.0.0
+info:
+  title: Doctor Portal API
+  description: API documentation for the Doctor Portal, which manages patient data.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8081
+    description: Authentication and signup service
+  - url: http://localhost:8082
+    description: Patient management service
+
+paths:
+  /signup:
+    post:
+      summary: Add a new user (doctor or receptionist)
+      description: Admins can add new doctors and receptionists.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: abcde
+                first_name:
+                  type: string
+                  example: forrst
+                last_name:
+                  type: string
+                  example: lasts
+                email:
+                  type: string
+                  example: abvc@gmail.com
+                role:
+                  type: string
+                  example: receptionist
+                password:
+                  type: string
+                  example: abcd1234
+      responses:
+        '201':
+          description: User created successfully
+
+  /login:
+    post:
+      summary: Log in a user
+      description: Authenticates a user and returns a JWT token.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: abvc@gmail.com
+                password:
+                  type: string
+                  example: abcd1234
+      responses:
+        '200':
+          description: User logged in
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user_id:
+                    type: string
+                  token:
+                    type: string
+
+  /patient:
+    post:
+      summary: Add a new patient
+      description: Adds a new patient to the system.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                  example: jon
+                last_name:
+                  type: string
+                  example: doe
+                email:
+                  type: string
+                  example: john.doe@example.com
+      responses:
+        '201':
+          description: Patient created successfully
+
+    put:
+      summary: Update patient details
+      description: Updates the information of an existing patient.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                patient_id:
+                  type: string
+                  example: 8cd6413b-cb14-479e-9cdd-cd965c6c4afe
+                first_name:
+                  type: string
+                  example: updated_first
+                last_name:
+                  type: string
+                  example: updated_last
+                email:
+                  type: string
+                  example: updated_email@example.com
+      responses:
+        '200':
+          description: Patient details updated
+
+    delete:
+      summary: Delete a patient
+      description: Deletes a patient by their unique ID.
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: patient_id
+          schema:
+            type: string
+            example: 8cd6413b-cb14-479e-9cdd-cd965c6c4afe
+          required: true
+          description: Unique patient ID
+      responses:
+        '200':
+          description: Patient deleted successfully
+
+    get:
+      summary: Get patient details
+      description: Retrieves details of a specific patient.
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: patient_id
+          schema:
+            type: string
+            example: 8cd6413b-cb14-479e-9cdd-cd965c6c4afe
+          required: true
+          description: Unique patient ID
+      responses:
+        '200':
+          description: Patient details retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  patient_id:
+                    type: string
+                  first_name:
+                    type: string
+                  last_name:
+                    type: string
+                  email:
+                    type: string
+
+  /patient/all:
+    get:
+      summary: Get all patients
+      description: Retrieves a list of all patients.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: List of patients
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    user_id:
+                      type: string
+                    first_name:
+                      type: string
+                    last_name:
+                      type: string
+                    email:
+                      type: string
+                    created_at:
+                      type: number
+                    updated_at:
+                      type: number
+
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - bearerAuth: []

@@ -20,7 +20,7 @@ var jwtKey = []byte(configs.LoadConfig().JWTSecret)
 func TokenValidationMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
-		if r.URL.Path == "/signup" || r.URL.Path == "/login" || r.URL.Path == "/health" {
+		if r.URL.Path == "/signup" || r.URL.Path == "/login" || r.URL.Path == "/health" || r.URL.Path == "/docs/swagger.yaml" {
 			next.ServeHTTP(w, r)
 			return
 		}

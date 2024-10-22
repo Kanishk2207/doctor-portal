@@ -95,6 +95,13 @@ A microservice-based doctor portal where receptionists can create, read, update,
 
     - The Patient Service will be available on port `8082`.
 
+## Docs
+For the swagger docs, You have to
+
+  - the auth-service server
+
+  - The docs are available at http://localhost:8081/docs/
+
 ## Deployment with Kubernetes
 Kubernetes scripts are provided to deploy the application in a microservice architecture.
 

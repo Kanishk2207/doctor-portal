@@ -29,6 +29,10 @@ func main() {
 	db.InitDB(config.DB_DSN)
 	defer db.DB.Close()
 
+	http.Handle("/docs/swagger.yaml", http.FileServer(http.Dir("../../docs")))
+
+	http.Handle("/docs/", http.StripPrefix("/docs/", http.FileServer(http.Dir("../../swagger-ui/"))))
+
 	http.HandleFunc("/health", healthCheckHandler)
 	port := config.HTTPAddress
 
