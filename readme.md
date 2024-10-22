@@ -25,7 +25,7 @@ A microservice-based doctor portal where receptionists can create, read, update,
 1. Clone the repository:
 
     ```bash
-    git clone <your-repo-url>
+    git clone https://github.com/Kanishk2207/doctor-portal.git
     ```
 
 2. **Auth Service**:
