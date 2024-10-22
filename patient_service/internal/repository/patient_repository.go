@@ -66,7 +66,7 @@ func (r *PatientRepository) GetPatient(patientID string) (*models.Patient, error
 
 func (r *PatientRepository) RemovePatient(patientID string) error {
 	_, err := r.DB.Exec(
-		"DELETE FROM patients WHERE patient_id = ?",
+		"DELETE FROM patients WHERE patient_id = $1",
 		patientID,
 	)
 	return err
