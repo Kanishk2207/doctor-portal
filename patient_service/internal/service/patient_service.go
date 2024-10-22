@@ -8,6 +8,14 @@ import (
 	"patient_service/internal/utils"
 )
 
+type PatientServiceInterface interface {
+	CreatePatient(firstName, lastName, email string) error
+	GetAllPatients() ([]*models.Patient, error)
+	GetPatient(patientID string) (*models.Patient, error)
+	UpdatePatient(patientID, firstName, lastName, email string) error
+	RemovePatient(patientID string) error
+}
+
 type PatientService struct {
 	repo *repository.PatientRepository
 }

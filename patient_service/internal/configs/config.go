@@ -15,7 +15,8 @@ type Config struct {
 }
 
 func LoadConfig() *Config {
-	JWTExpiry, err := strconv.Atoi(os.Getenv("JWTEXPIRY"))
+	// JWTExpiry, err := strconv.Atoi(os.Getenv("JWTEXPIRY"))
+	JWTExpiry, err := strconv.Atoi("86400")
 	if err != nil {
 		log.Fatalf("Error occurred in config: %v", err)
 	}

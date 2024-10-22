@@ -86,3 +86,8 @@ func ExtractClaimsFromContext(r *http.Request) (jwt.MapClaims, error) {
 	}
 	return claims, nil
 }
+
+func AttachClaimsToContext(r *http.Request, claims jwt.MapClaims) *http.Request {
+	ctx := context.WithValue(r.Context(), contextKey("userPayload"), claims)
+	return r.WithContext(ctx)
+}

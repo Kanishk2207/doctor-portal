@@ -1,46 +1,46 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auth-service-deployment
+  name: patient-service-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: auth-service
+      app: patient-service
   template:
     metadata:
       labels:
-        app: auth-service
+        app: patient-service
     spec:
       containers:
-      - name: auth-service
-        image: kanishk2207/go_auth_service:0.0.1
+      - name: patient-service
+        image: kanishk2207/patient_service:0.0.1
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
         env:
-        - name: DSN  # Updated DSN for Postgres
+        - name: DSN
           valueFrom:
             secretKeyRef:
-              name: app-secret
+              name: patient-service-secret
               key: dsn
         - name: HTTPADDRESS
           valueFrom:
             configMapKeyRef:
-              name: app-config
+              name: patient-service-config
               key: HTTPAddress
         - name: GRPCADDRESS
           valueFrom:
             configMapKeyRef:
-              name: app-config
+              name: patient-service-config
               key: GRPCAddress
         - name: JWTSECRET
           valueFrom:
             secretKeyRef:
-              name: app-secret
+              name: patient-service-secret
               key: JWTSECRET
         - name: JWTEXPIRY
           valueFrom:
             secretKeyRef:
-              name: app-secret
+              name: patient-service-secret
               key: JWTEXPIRY

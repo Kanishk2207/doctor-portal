@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: patient-service-config
+data:
+  HTTPAddress: "8080"
+  GRPCAddress: "50052"

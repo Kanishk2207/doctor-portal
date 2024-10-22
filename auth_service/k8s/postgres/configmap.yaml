@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-init-script
+data:
+  init-db.sql: |
+    CREATE DATABASE IF NOT EXISTS authservicedb;
+    CREATE DATABASE IF NOT EXISTS patientservicedb;
+    CREATE USER dev_user WITH PASSWORD 'Kanishk_22';
+    GRANT ALL PRIVILEGES ON DATABASE authservicedb TO dev_user;
+    GRANT ALL PRIVILEGES ON DATABASE patientservicedb TO dev_user;

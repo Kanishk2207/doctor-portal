@@ -12,14 +12,12 @@ import (
 )
 
 type PatientHandler struct {
-	patientService *service.PatientService
+	patientService service.PatientServiceInterface // Use the interface here
 	validator      *validator.Validate
 }
 
-func NewPatientHandler(s *service.PatientService) *PatientHandler {
-	patientHandler := PatientHandler{patientService: s, validator: validator.New()}
-	patientHandlerPtr := &patientHandler
-	return patientHandlerPtr
+func NewPatientHandler(s service.PatientServiceInterface) *PatientHandler { // Accept interface
+	return &PatientHandler{patientService: s, validator: validator.New()}
 }
 
 func (h *PatientHandler) HandlePatientRoutes(w http.ResponseWriter, r *http.Request) {
